@@ -1,26 +1,350 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------------ */
+/* Design tokens — Section 3.1 "Kalimpong at dusk"                           */
+/* ------------------------------------------------------------------------ */
+
+@theme {
+  --color-ink: #101815;
+  --color-mist: #eff1ec;
+  --color-pine: #223a2e;
+  --color-marigold: #e2a23b;
+  --color-moss: #7e8a80;
+  --color-line: #d8dcd4;
+
+  /* Contrast-safe variants of --moss. Plain #7E8A80 is 3.16:1 on mist and
+     3.42:1 on pine — both below AA for the 11–13px mono it is used at, so
+     each surface gets a tuned tone (Section 9). */
+  --color-moss-strong: #5c685e; /* 5.05:1 on mist  */
+  --color-moss-soft: #a9b5aa; /* 5.82:1 on pine, 8.5:1 on ink */
+
+  --font-display: var(--font-display), Georgia, "Times New Roman", serif;
+  --font-body: var(--font-body), Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-sharp: 2px;
+}
+
+/* Per-surface semantic colors. Components read these, so a section only has to
+   declare which surface it is. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --surface: var(--color-mist);
+  --surface-text: var(--color-ink);
+  --surface-muted: var(--color-moss-strong);
+  --surface-line: var(--color-line);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.surface-pine {
+  --surface: var(--color-pine);
+  --surface-text: var(--color-mist);
+  --surface-muted: var(--color-moss-soft);
+  --surface-line: color-mix(in srgb, var(--color-mist) 16%, transparent);
+  background-color: var(--surface);
+  color: var(--surface-text);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.surface-ink {
+  --surface: var(--color-ink);
+  --surface-text: var(--color-mist);
+  --surface-muted: var(--color-moss-soft);
+  --surface-line: color-mix(in srgb, var(--color-mist) 14%, transparent);
+  background-color: var(--surface);
+  color: var(--surface-text);
+}
+
+@utility text-muted {
+  color: var(--surface-muted);
+}
+
+@utility border-hairline {
+  border-color: var(--surface-line);
+}
+
+/* ------------------------------------------------------------------------ */
+/* Base                                                                      */
+/* ------------------------------------------------------------------------ */
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Lenis drives scrolling itself; native smooth scroll would fight it. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+html.lenis {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-mist);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+@media (min-width: 768px) {
+  body {
+    font-size: 1.0625rem;
+  }
+}
+
+::selection {
+  background-color: var(--color-marigold);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-marigold);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Typography primitives — Section 3.2                                       */
+/* ------------------------------------------------------------------------ */
+
+@utility display-1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3rem, 8vw, 7.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+@utility display-2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.015em;
+}
+
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--surface-muted);
+}
+
+@media (min-width: 480px) {
+  .eyebrow {
+    font-size: 0.75rem;
+  }
+}
+
+@utility machine {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--surface-muted);
+}
+
+@media (min-width: 768px) {
+  .machine {
+    font-size: 0.8125rem;
+  }
+}
+
+@utility measure {
+  max-width: 65ch;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Layout — Section 3.4                                                      */
+/* ------------------------------------------------------------------------ */
+
+@utility shell {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .shell {
+    padding-inline: 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .shell {
+    padding-inline: 4rem;
+  }
+}
+
+@utility section-y {
+  padding-block: clamp(4.5rem, 11vw, 9rem);
+}
+
+/* ------------------------------------------------------------------------ */
+/* Film grain — dark sections only, Section 3.1                              */
+/* ------------------------------------------------------------------------ */
+
+@utility grain {
+  position: relative;
+  isolation: isolate;
+}
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+.grain > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Hero tint — a very slow pine drift, transform-only (Section 4.2)          */
+/* ------------------------------------------------------------------------ */
+
+.hero-tint {
+  background: radial-gradient(
+    58% 46% at 68% 28%,
+    color-mix(in srgb, var(--color-pine) 4%, transparent) 0%,
+    transparent 70%
+  );
+  animation: hero-drift 30s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes hero-drift {
+  from {
+    transform: translate3d(-3%, 2%, 0) scale(1.05);
+  }
+  to {
+    transform: translate3d(4%, -3%, 0) scale(1.15);
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Accessibility helpers                                                     */
+/* ------------------------------------------------------------------------ */
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100%;
+  z-index: 100;
+  background-color: var(--color-marigold);
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sharp);
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Split-text — spans produced by lib/split.ts                               */
+/* ------------------------------------------------------------------------ */
+
+.split-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.split-word {
+  display: inline-block;
+  white-space: pre;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Custom cursor — fine pointers only, Section 3.4                           */
+/* ------------------------------------------------------------------------ */
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 90;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 999px;
+  background-color: var(--color-marigold);
+  opacity: 0;
+}
+
+.cursor-dot span {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  color: var(--color-ink);
+  opacity: 0;
+  white-space: nowrap;
+}
+
+/* The native cursor is only hidden once the replacement is actually running. */
+html.has-cursor,
+html.has-cursor a,
+html.has-cursor button {
+  cursor: none;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Preloader — first visit only, gated by the inline script in Preloader.tsx  */
+/* ------------------------------------------------------------------------ */
+
+.preloader {
+  display: none;
+}
+
+html.is-intro .preloader {
+  display: flex;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Reduced motion — Section 7.3                                              */
+/* ------------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.2s !important;
+  }
+
+  .cursor-dot {
+    display: none !important;
+  }
 }
