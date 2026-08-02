@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { ButtonLink } from "@/components/ui";
+import { BarLink } from "@/components/ui";
 import { INTRO_DONE } from "@/components/Preloader";
 import { MACHINE_VOICE_LINE } from "@/lib/content";
 import { FULL_MOTION, REDUCED_MOTION, gsap, useGSAP } from "@/lib/gsap";
@@ -114,42 +114,57 @@ export function Hero() {
         className="hero-tint pointer-events-none absolute inset-0 -z-10"
       />
 
-      <div className="shell flex min-h-svh flex-col justify-center pt-32 pb-24 md:pt-40">
-        <p data-hero="eyebrow" className="eyebrow">
-          Kalimpong, India · Product &amp; Design Engineer
-        </p>
+      <div className="flex min-h-svh flex-col pt-14 md:pt-16">
+        <div className="shell flex flex-1 flex-col justify-center py-16">
+          <p
+            data-hero="eyebrow"
+            className="eyebrow border-t border-ink/60 pt-4"
+          >
+            Kalimpong, India · Developer &amp; Technology Advisor
+          </p>
 
-        <h1
-          id="hero-title"
-          data-hero="h1"
-          className="display-1 mt-8 max-w-[14ch] text-balance"
-        >
-          I make technology make <em>sense</em>.
-        </h1>
+          {/* Fills the shell width, reference-style: one heavy grotesque. */}
+          <h1
+            id="hero-title"
+            data-hero="h1"
+            className="metallic mt-10 text-[clamp(2.9rem,10.4vw,9.75rem)] leading-[0.92] font-semibold tracking-[-0.055em] md:mt-14"
+          >
+            I make technology make <em>sense</em>.
+          </h1>
 
-        <p
-          data-hero="machine"
-          aria-hidden="true"
-          className="machine mt-8 max-w-full break-words"
-        >
-          {MACHINE_VOICE_LINE}
-        </p>
+          <p
+            data-hero="machine"
+            aria-hidden="true"
+            className="machine mt-8 max-w-full break-words md:mt-10"
+          >
+            {MACHINE_VOICE_LINE}
+          </p>
+        </div>
 
-        <p
-          data-hero="sub"
-          className="mt-8 max-w-[52ch] text-lg leading-relaxed text-ink/80 md:text-xl"
-        >
-          Websites, digital tools, and honest answers — for people who
-          don&rsquo;t speak tech, and for people who do.
-        </p>
+        <div className="shell pb-10">
+          <div className="grid items-start gap-8 border-t border-ink/60 pt-8 lg:grid-cols-2 lg:gap-16">
+            <p
+              data-hero="sub"
+              className="max-w-[52ch] text-lg leading-relaxed text-ink/80 md:text-xl"
+            >
+              Websites, digital tools, and honest answers. For people who
+              don&rsquo;t speak tech, and for people who do.
+            </p>
 
-        <div data-hero="cta" className="mt-10 flex flex-wrap gap-3">
-          <ButtonLink href={WHATSAPP_HREF} target="_blank" rel="noopener">
-            WhatsApp me
-          </ButtonLink>
-          <ButtonLink href="/#work" variant="ghost">
-            See my work
-          </ButtonLink>
+            <div data-hero="cta" className="flex flex-col gap-2">
+              <BarLink
+                href={WHATSAPP_HREF}
+                target="_blank"
+                rel="noopener"
+                variant="marigold"
+              >
+                WhatsApp me
+              </BarLink>
+              <BarLink href="/#work" variant="ghost" arrow="↓">
+                See my work
+              </BarLink>
+            </div>
+          </div>
         </div>
       </div>
     </section>

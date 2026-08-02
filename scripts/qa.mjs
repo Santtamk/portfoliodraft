@@ -18,7 +18,9 @@ const ROUTES = [
   ["article", "/writing/when-ai-talks-about-your-business"],
   ["case-kalimpong", "/works/kalimpong-bungalow"],
   ["case-satori", "/works/satori-stay"],
-  ["case-routekind", "/works/route-kind"],
+  ["case-teesta", "/works/teesta"],
+  ["case-khata", "/works/khata"],
+  ["case-rasid", "/works/rasid"],
 ];
 
 const SIZES = [
@@ -63,12 +65,17 @@ async function overflow(page) {
      * decorations sit outside the flow entirely.
      */
     function contained(el) {
-      for (let node = el; node && node !== document.body; node = node.parentElement) {
+      for (
+        let node = el;
+        node && node !== document.body;
+        node = node.parentElement
+      ) {
         const style = getComputedStyle(node);
         if (style.position === "fixed") return true;
         if (node !== el) {
           const x = style.overflowX;
-          if (x === "hidden" || x === "clip" || x === "auto" || x === "scroll") return true;
+          if (x === "hidden" || x === "clip" || x === "auto" || x === "scroll")
+            return true;
         }
       }
       return false;
@@ -77,7 +84,8 @@ async function overflow(page) {
     const offenders = [...document.querySelectorAll("body *")]
       .filter((el) => {
         const style = getComputedStyle(el);
-        if (style.display === "none" || style.visibility === "hidden") return false;
+        if (style.display === "none" || style.visibility === "hidden")
+          return false;
         return !contained(el);
       })
       .map((el) => {
@@ -134,7 +142,10 @@ for (const [size, width, height] of SIZES) {
       fail(
         `${name}@${size} element overflows viewport — ` +
           result.offenders
-            .map((o) => `${o.tag}.${o.cls} [${Math.round(o.left)}..${Math.round(o.right)}]`)
+            .map(
+              (o) =>
+                `${o.tag}.${o.cls} [${Math.round(o.left)}..${Math.round(o.right)}]`,
+            )
             .join(", "),
       );
     } else {
@@ -147,7 +158,8 @@ for (const [size, width, height] of SIZES) {
     });
   }
 
-  if (errors.length) fail(`console/page errors @${size}: ${errors.slice(0, 3).join(" | ")}`);
+  if (errors.length)
+    fail(`console/page errors @${size}: ${errors.slice(0, 3).join(" | ")}`);
   else pass(`no console errors @${size}`);
 
   await context.close();
@@ -164,7 +176,9 @@ for (const [size, width, height] of SIZES) {
     await page.goto(`${origin}${path}`, { waitUntil: "domcontentloaded" });
     const hidden = await page.evaluate(() => {
       const bad = [];
-      for (const el of document.querySelectorAll("h1, h2, h3, p, li, blockquote")) {
+      for (const el of document.querySelectorAll(
+        "h1, h2, h3, p, li, blockquote",
+      )) {
         if (!el.textContent?.trim()) continue;
         const style = getComputedStyle(el);
         if (
@@ -179,7 +193,8 @@ for (const [size, width, height] of SIZES) {
       }
       return bad;
     });
-    if (hidden.length) fail(`${name} no-JS hides: ${hidden.slice(0, 3).join(" | ")}`);
+    if (hidden.length)
+      fail(`${name} no-JS hides: ${hidden.slice(0, 3).join(" | ")}`);
     else pass(`${name} no-JS complete`);
     await page.screenshot({ path: `${OUT}/nojs-${name}.png`, fullPage: true });
   }
@@ -224,28 +239,39 @@ for (const [size, width, height] of SIZES) {
   if (state.faded === 0) pass("reduced-motion: nothing left faded out");
   else fail(`reduced-motion: ${state.faded} elements below full opacity`);
 
-  await page.screenshot({ path: `${OUT}/reduced-motion-home.png`, fullPage: true });
+  await page.screenshot({
+    path: `${OUT}/reduced-motion-home.png`,
+    fullPage: true,
+  });
   await context.close();
 }
 
 /* 4. Keyboard — skip link, focus ring, overlay menu focus trap. */
 {
-  const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  const context = await browser.newContext({
+    viewport: { width: 1440, height: 900 },
+  });
   const page = await context.newPage();
   await page.goto(`${origin}/`, { waitUntil: "networkidle" });
   await page.waitForTimeout(1200);
   await page.keyboard.press("Tab");
   const first = await page.evaluate(() => {
     const el = document.activeElement;
-    return { text: el?.textContent?.trim(), outline: getComputedStyle(el).outlineColor };
+    return {
+      text: el?.textContent?.trim(),
+      outline: getComputedStyle(el).outlineColor,
+    };
   });
-  if (first.text?.toLowerCase().includes("skip")) pass("skip link is first tab stop");
+  if (first.text?.toLowerCase().includes("skip"))
+    pass("skip link is first tab stop");
   else fail(`first tab stop is "${first.text}"`);
-  if (first.outline?.includes("226, 162, 59")) pass("marigold focus ring");
+  if (first.outline?.includes("240, 238, 233")) pass("cloud-dancer focus ring");
   else fail(`focus ring color ${first.outline}`);
   await context.close();
 }
 
 await browser.close();
-console.log(failures === 0 ? "\nQA passed.\n" : `\n${failures} QA check(s) failed.\n`);
+console.log(
+  failures === 0 ? "\nQA passed.\n" : `\n${failures} QA check(s) failed.\n`,
+);
 process.exit(failures === 0 ? 0 : 1);

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { lockScroll, unlockScroll } from "@/lib/lenis";
+import { WHATSAPP_HREF } from "@/lib/site";
 
 const LINKS = [
   { href: "/#work", label: "Work" },
@@ -113,29 +114,36 @@ export function Nav() {
 
   return (
     <>
+      {/* Tile-row bar: wordmark tile, CTA tile, links — flush, hard-edged. */}
       <header
         ref={root}
         data-nav
-        className="group fixed inset-x-0 top-0 z-50 border-b border-transparent transition-[background-color,border-color,backdrop-filter] duration-300 [&.is-stuck]:border-b-[var(--surface-line)] [&.is-stuck]:bg-[color-mix(in_srgb,var(--color-mist)_82%,transparent)] [&.is-stuck]:backdrop-blur-md"
+        className="group fixed inset-x-0 top-0 z-50 border-b border-ink/15 bg-mist transition-shadow duration-300 [&.is-stuck]:shadow-[0_1px_0_var(--color-ink)]"
       >
-        <nav
-          aria-label="Primary"
-          className="shell flex h-[4.5rem] items-center justify-between gap-6"
-        >
+        <nav aria-label="Primary" className="flex h-14 items-stretch md:h-16">
           <Link
             href="/"
-            className="font-[family-name:var(--font-display)] text-2xl leading-none tracking-tight"
+            className="metal-silver flex items-center px-5 text-xl font-semibold tracking-[-0.04em] md:px-7"
           >
             Santam
           </Link>
 
-          <ul className="hidden items-center gap-8 md:flex">
+          <a
+            href={WHATSAPP_HREF}
+            target="_blank"
+            rel="noopener"
+            className="metal-gold hidden items-center gap-3 px-6 text-[0.9375rem] font-medium md:flex"
+          >
+            WhatsApp me <span aria-hidden="true">+</span>
+          </a>
+
+          <ul className="ml-auto hidden items-stretch md:flex">
             {LINKS.map((link) => (
-              <li key={link.href}>
+              <li key={link.href} className="flex border-l border-ink/15">
                 <Link
                   href={link.href}
                   prefetch={false}
-                  className="text-[0.9375rem] text-ink/80 transition-colors hover:text-ink"
+                  className="flex items-center px-6 text-[0.9375rem] font-medium text-ink/80 transition-colors hover:bg-ink/5 hover:text-ink"
                 >
                   {link.label}
                 </Link>
@@ -143,12 +151,12 @@ export function Nav() {
             ))}
           </ul>
 
-          <p className="machine hidden items-center gap-2 sm:flex">
+          <p className="machine ml-auto flex items-center gap-2 border-l border-ink/15 px-4 md:ml-0 md:px-6">
             <span
               aria-hidden="true"
               className="inline-block size-1.5 rounded-full bg-marigold"
             />
-            open for work
+            <span className="hidden sm:inline">open for work</span>
           </p>
 
           <button
@@ -156,7 +164,7 @@ export function Nav() {
             onClick={() => setOpen((value) => !value)}
             aria-expanded={open}
             aria-controls="mobile-menu"
-            className="machine -mr-2 px-2 py-2 uppercase md:hidden"
+            className="machine flex items-center border-l border-ink/15 px-5 uppercase md:hidden"
           >
             {open ? "Close" : "Menu"}
           </button>
@@ -169,10 +177,10 @@ export function Nav() {
           id="mobile-menu"
           className="surface-pine grain fixed inset-0 z-[60] flex flex-col md:hidden"
         >
-          <div className="shell flex h-[4.5rem] shrink-0 items-center justify-between">
+          <div className="shell flex h-14 shrink-0 items-center justify-between">
             <Link
               href="/"
-              className="font-[family-name:var(--font-display)] text-2xl leading-none tracking-tight text-mist"
+              className="text-xl font-semibold tracking-[-0.04em] text-ink"
               data-menu-item
             >
               Santam

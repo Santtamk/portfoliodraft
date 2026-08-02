@@ -6,11 +6,11 @@ import path from "node:path";
 export const OG_SIZE = { width: 1200, height: 630 };
 export const OG_CONTENT_TYPE = "image/png";
 
-const INK = "#101815";
-const MIST = "#EFF1EC";
-const PINE = "#223A2E";
-const MARIGOLD = "#E2A23B";
-const MOSS = "#A9B5AA";
+const INK = "#161614";
+const MIST = "#DEDCD6";
+const PINE = "#131314";
+const MARIGOLD = "#F0EEE9";
+const MOSS = "#A3A19B";
 
 async function font(file: string) {
   return readFile(path.join(process.cwd(), "src", "og-fonts", file));
@@ -29,8 +29,8 @@ export async function ogImage({
   headline: string;
   machine: string;
 }) {
-  const [serif, code] = await Promise.all([
-    font("InstrumentSerif-Regular.ttf"),
+  const [sans, code] = await Promise.all([
+    font("Switzer-Semibold.ttf"),
     font("FragmentMono-Regular.ttf"),
   ]);
 
@@ -71,10 +71,11 @@ export async function ogImage({
       <div
         style={{
           display: "flex",
-          fontFamily: "Instrument Serif",
-          fontSize: headline.length > 46 ? 84 : 104,
-          lineHeight: 1.02,
-          letterSpacing: "-0.02em",
+          fontFamily: "Switzer",
+          fontWeight: 600,
+          fontSize: headline.length > 46 ? 76 : 96,
+          lineHeight: 0.98,
+          letterSpacing: "-0.04em",
           color: MIST,
           maxWidth: 1000,
         }}
@@ -119,7 +120,7 @@ export async function ogImage({
     {
       ...OG_SIZE,
       fonts: [
-        { name: "Instrument Serif", data: serif, style: "normal", weight: 400 },
+        { name: "Switzer", data: sans, style: "normal", weight: 600 },
         { name: "Fragment Mono", data: code, style: "normal", weight: 400 },
       ],
     },

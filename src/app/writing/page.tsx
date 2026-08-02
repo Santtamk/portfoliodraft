@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/motion";
 import { Eyebrow } from "@/components/ui";
-import { ARTICLE } from "@/lib/content";
+import { ARTICLES } from "@/lib/content";
 import { PERSON, SITE_URL } from "@/lib/site";
 
 const description =
-  "Notes on making sense of technology — plain-language writing on the web, AI, and the tools businesses actually need.";
+  "Notes on making sense of technology: plain-language writing on the web, AI, and the tools businesses actually need.";
 
 export const metadata: Metadata = {
   title: `Writing — ${PERSON.name}`,
@@ -22,27 +22,40 @@ export const metadata: Metadata = {
 export default function WritingIndex() {
   return (
     <div className="shell pt-36 pb-24 md:pt-48">
-      <Eyebrow>{"// writing"}</Eyebrow>
+      <Eyebrow>Writing</Eyebrow>
       <h1 className="display-1 mt-6 max-w-[14ch]">
         Notes on making sense of technology.
       </h1>
 
-      <Reveal className="mt-16 md:mt-24">
-        <article className="border-t border-hairline">
-          <Link href={`/writing/${ARTICLE.slug}`} className="group block py-10">
-            <p className="machine flex flex-wrap items-center gap-x-3">
-              <span>{ARTICLE.dateLabel}</span>
-              <span aria-hidden="true">·</span>
-              <span>{ARTICLE.readingTime}</span>
-            </p>
-            <h2 className="display-2 mt-5 max-w-[22ch] transition-colors group-hover:text-pine">
-              {ARTICLE.title}
-            </h2>
-            <p className="measure mt-6 text-lg text-ink/75">{ARTICLE.teaser}</p>
-            <p className="machine mt-8">Read the article ↗</p>
-          </Link>
-        </article>
-      </Reveal>
+      <div className="mt-16 md:mt-24">
+        {ARTICLES.map((article) => (
+          <Reveal key={article.slug}>
+            <article className="border-t border-ink/60">
+              <Link
+                href={`/writing/${article.slug}`}
+                className="group block py-10"
+              >
+                <p className="machine flex flex-wrap items-center gap-x-3">
+                  <span>{article.dateLabel}</span>
+                  <span aria-hidden="true">·</span>
+                  <span>{article.readingTime}</span>
+                </p>
+                <h2 className="display-2 mt-5 max-w-[22ch] transition-colors group-hover:text-marigold">
+                  {article.title}
+                </h2>
+                <p className="measure mt-6 text-lg text-ink/75">
+                  {article.teaser}
+                </p>
+                {/* Styled as the layout's action bar; the whole card is the link. */}
+                <span className="bar-button mt-10" aria-hidden="true">
+                  <span>Read the article</span>
+                  <span className="bar-arrow">→</span>
+                </span>
+              </Link>
+            </article>
+          </Reveal>
+        ))}
+      </div>
     </div>
   );
 }

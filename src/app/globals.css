@@ -5,24 +5,29 @@
 /* ------------------------------------------------------------------------ */
 
 @theme {
-  --color-ink: #101815;
-  --color-mist: #eff1ec;
-  --color-pine: #223a2e;
-  --color-marigold: #e2a23b;
-  --color-moss: #7e8a80;
-  --color-line: #d8dcd4;
+  /* Dark-metallic palette. The token NAMES kept their layout roles when the
+     site went dark, so their values inverted: --mist is now the obsidian
+     ground every page sits on, and --ink is the platinum used for text and
+     rules on it. --pine is gunmetal panelling; --marigold is champagne gold. */
+  --color-ink: #dedcd6; /* soft warm platinum */
+  --color-mist: #101011; /* graphite ground */
+  --color-pine: #1b1b1e; /* charcoal panels */
+  /* Pantone 11-4201 Cloud Dancer — Colour of the Year 2026. Brighter than the
+     body platinum so hovers and highlights read as a lift toward white.
+     (Token name is historical.) */
+  --color-marigold: #f0eee9;
+  --color-moss: #8f8e89;
+  --color-line: #2e2e30;
 
-  /* Contrast-safe variants of --moss. Plain #7E8A80 is 3.16:1 on mist and
-     3.42:1 on pine — both below AA for the 11–13px mono it is used at, so
-     each surface gets a tuned tone (Section 9). */
-  --color-moss-strong: #5c685e; /* 5.05:1 on mist  */
-  --color-moss-soft: #a9b5aa; /* 5.82:1 on pine, 8.5:1 on ink */
+  /* Muted warm silvers, tuned per surface for AA at 11–13px mono. */
+  --color-moss-strong: #a3a19b; /* ~7.5:1 on graphite */
+  --color-moss-soft: #a8a6a0; /* ~7:1 on charcoal panels */
 
-  --font-display: var(--font-display), Georgia, "Times New Roman", serif;
   --font-body: var(--font-body), Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-body);
   --font-mono: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --radius-sharp: 2px;
+  --radius-sharp: 0px;
 }
 
 /* Per-surface semantic colors. Components read these, so a section only has to
@@ -31,24 +36,44 @@
   --surface: var(--color-mist);
   --surface-text: var(--color-ink);
   --surface-muted: var(--color-moss-strong);
-  --surface-line: var(--color-line);
+  --surface-line: color-mix(in srgb, var(--color-ink) 26%, transparent);
+  --surface-rule: var(--color-ink);
 }
 
 .surface-pine {
   --surface: var(--color-pine);
-  --surface-text: var(--color-mist);
+  --surface-text: var(--color-ink);
   --surface-muted: var(--color-moss-soft);
-  --surface-line: color-mix(in srgb, var(--color-mist) 16%, transparent);
+  --surface-line: color-mix(in srgb, var(--color-ink) 22%, transparent);
+  --surface-rule: var(--color-ink);
   background-color: var(--surface);
   color: var(--surface-text);
 }
 
+/* A step darker than the ground — footer and contact wells. */
 .surface-ink {
-  --surface: var(--color-ink);
-  --surface-text: var(--color-mist);
+  --surface: #141415;
+  --surface-text: var(--color-ink);
   --surface-muted: var(--color-moss-soft);
-  --surface-line: color-mix(in srgb, var(--color-mist) 14%, transparent);
+  --surface-line: color-mix(in srgb, var(--color-ink) 20%, transparent);
+  --surface-rule: var(--color-ink);
   background-color: var(--surface);
+  color: var(--surface-text);
+}
+
+/* Cloud Dancer band: the one bright surface on the site — dark text. */
+.surface-marigold {
+  --surface: #f0eee9;
+  --surface-text: #1a1a18;
+  --surface-muted: #4d4b45;
+  --surface-line: color-mix(in srgb, #1a1a18 30%, transparent);
+  --surface-rule: #1a1a18;
+  background-image: linear-gradient(
+    180deg,
+    #fcfbf9 0%,
+    #f0eee9 55%,
+    #ddd9d0 100%
+  );
   color: var(--surface-text);
 }
 
@@ -89,6 +114,7 @@ html.lenis {
 body {
   background-color: var(--color-mist);
   color: var(--color-ink);
+  color-scheme: dark;
   font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.6;
@@ -105,7 +131,7 @@ body {
 
 ::selection {
   background-color: var(--color-marigold);
-  color: var(--color-ink);
+  color: #161614;
 }
 
 :focus-visible {
@@ -119,19 +145,28 @@ body {
 /* ------------------------------------------------------------------------ */
 
 @utility display-1 {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(3rem, 8vw, 7.5rem);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: clamp(2.75rem, 8.2vw, 7.5rem);
   line-height: 0.95;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.05em;
 }
 
 @utility display-2 {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(2rem, 5vw, 4rem);
-  line-height: 1;
-  letter-spacing: -0.015em;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: clamp(1.9rem, 4.8vw, 4rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+/* Giant index numbers and chapter titles — the reference's 80px "01 Tools". */
+@utility display-chapter {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: clamp(2.5rem, 5.5vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
 }
 
 @utility eyebrow {
@@ -196,6 +231,164 @@ body {
 }
 
 /* ------------------------------------------------------------------------ */
+/* Reference devices — bar buttons, bordered cells, giant wordmark           */
+/* ------------------------------------------------------------------------ */
+
+/* Full-width action bar: brushed silver, label left, arrow right. A sheen
+   strip sweeps across on hover (transform-only). */
+@utility bar-button {
+  position: relative;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  overflow: hidden;
+  padding: 1.4rem 1.5rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.2;
+  background-image: linear-gradient(
+    180deg,
+    #2c2c2f 0%,
+    #1d1d1f 50%,
+    #121213 100%
+  );
+  color: var(--color-marigold);
+  /* Hairline edge so graphite bars read against the graphite ground. */
+  box-shadow: inset 0 0 0 1px rgba(240, 238, 233, 0.16);
+  transition: filter 0.25s;
+}
+
+@media (min-width: 768px) {
+  .bar-button {
+    padding: 1.6rem 2rem;
+    font-size: 1.125rem;
+  }
+}
+
+.bar-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 34%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  transform: translateX(-130%) skewX(-18deg);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.bar-button:hover {
+  filter: brightness(1.05);
+}
+
+.bar-button:hover::before {
+  transform: translateX(340%) skewX(-18deg);
+}
+
+.bar-button > * {
+  position: relative;
+}
+
+.bar-button .bar-arrow {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bar-button:hover .bar-arrow {
+  transform: translateX(6px);
+}
+
+.bar-button-marigold {
+  background-image: linear-gradient(
+    180deg,
+    #fbfaf7 0%,
+    #f0eee9 50%,
+    #d8d5cd 100%
+  );
+  color: #161614;
+}
+
+.bar-button-ghost {
+  background-image: none;
+  background-color: transparent;
+  color: var(--surface-text);
+  box-shadow: inset 0 0 0 1px var(--surface-line);
+}
+
+.bar-button-ghost:hover {
+  filter: none;
+  background-color: color-mix(in srgb, var(--surface-text) 7%, transparent);
+}
+
+/* Metal tiles for the nav. */
+.metal-silver {
+  background-image: linear-gradient(
+    180deg,
+    #2c2c2f 0%,
+    #1d1d1f 50%,
+    #121213 100%
+  );
+  color: var(--color-marigold);
+  transition: filter 0.25s;
+}
+
+.metal-silver:hover {
+  filter: brightness(1.05);
+}
+
+.metal-gold {
+  background-image: linear-gradient(
+    180deg,
+    #fbfaf7 0%,
+    #f0eee9 50%,
+    #d8d5cd 100%
+  );
+  color: #161614;
+  transition: filter 0.25s;
+}
+
+.metal-gold:hover {
+  filter: brightness(1.07);
+}
+
+/* Metallic sheen on giant type. Applied to the element AND its split words so
+   the word-mask reveal keeps the finish; the vertical gradient restarts
+   identically per word, so per-word clipping is invisible. */
+.metallic,
+.metallic .split-word {
+  background-image: linear-gradient(
+    180deg,
+    #faf9f6 0%,
+    #e6e4de 34%,
+    #a6a49d 52%,
+    #f0eee9 72%,
+    #cbc9c2 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* The viewport-width footer wordmark — sized so the word spans the shell. */
+.wordmark-giant {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: clamp(4.5rem, 21.5vw, 21rem);
+  line-height: 0.82;
+  letter-spacing: -0.06em;
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------------ */
 /* Film grain — dark sections only, Section 3.1                              */
 /* ------------------------------------------------------------------------ */
 
@@ -227,7 +420,7 @@ body {
 .hero-tint {
   background: radial-gradient(
     58% 46% at 68% 28%,
-    color-mix(in srgb, var(--color-pine) 4%, transparent) 0%,
+    color-mix(in srgb, var(--color-marigold) 7%, transparent) 0%,
     transparent 70%
   );
   animation: hero-drift 30s ease-in-out infinite alternate;
@@ -307,7 +500,7 @@ body {
   font-family: var(--font-mono);
   font-size: 0.625rem;
   letter-spacing: 0.12em;
-  color: var(--color-ink);
+  color: #161614;
   opacity: 0;
   white-space: nowrap;
 }

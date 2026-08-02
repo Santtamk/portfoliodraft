@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/JsonLd";
 import { Reveal } from "@/components/motion";
 import { ShotFrame } from "@/components/ShotFrame";
-import { ButtonLink, Eyebrow, PlaceholderFrame } from "@/components/ui";
+import { BarLink, Eyebrow, PlaceholderFrame } from "@/components/ui";
 import { PROJECTS, getProject } from "@/lib/content";
 import { projectSchema } from "@/lib/schema";
 import { PERSON, SITE_URL, WHATSAPP_HREF } from "@/lib/site";
@@ -93,7 +93,7 @@ export default async function CasePage({ params }: Params) {
             );
           })
         ) : (
-          <PlaceholderFrame label={`${project.name} — case study`} />
+          <PlaceholderFrame label={`${project.name} · case study`} />
         )}
       </div>
 
@@ -112,33 +112,38 @@ export default async function CasePage({ params }: Params) {
         </Reveal>
       </section>
 
-      <section className="shell border-t border-hairline py-10">
+      <section className="shell border-t border-ink/60 py-10">
         <h2 className="sr-only">Built with</h2>
         <p className="machine">{project.tech.join(" · ")}</p>
       </section>
 
       <section className="surface-pine grain section-y" aria-label="Next steps">
-        <div className="shell flex flex-col items-start gap-8">
+        <div className="shell flex flex-col gap-10">
           <p className="display-2 max-w-[16ch]">Want something like this?</p>
-          <ButtonLink href={WHATSAPP_HREF} target="_blank" rel="noopener">
+          <BarLink
+            href={WHATSAPP_HREF}
+            target="_blank"
+            rel="noopener"
+            variant="marigold"
+          >
             WhatsApp me
-          </ButtonLink>
+          </BarLink>
         </div>
       </section>
 
       <nav
         aria-label="More projects"
-        className="shell grid gap-6 border-t border-hairline py-12 sm:grid-cols-2"
+        className="shell grid gap-6 border-t border-ink/60 py-12 sm:grid-cols-2"
       >
         <Link href={`/works/${previous.slug}`} className="group">
           <span className="machine">Previous</span>
-          <span className="mt-2 block text-xl transition-colors group-hover:text-pine md:text-2xl">
+          <span className="mt-2 block text-xl transition-colors group-hover:text-marigold md:text-2xl">
             {previous.name}
           </span>
         </Link>
         <Link href={`/works/${next.slug}`} className="group sm:text-right">
           <span className="machine">Next</span>
-          <span className="mt-2 block text-xl transition-colors group-hover:text-pine md:text-2xl">
+          <span className="mt-2 block text-xl transition-colors group-hover:text-marigold md:text-2xl">
             {next.name}
           </span>
         </Link>

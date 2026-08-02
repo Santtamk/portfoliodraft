@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 
 /** Kept short on purpose — Section 7.5 caps the preloader at 1s. */
-const LINE = '{ "hello": ["humans", "machines"] }';
+const LINE = "making technology make sense";
 const CHAR_MS = 18;
 
 export const INTRO_DONE = "intro:done";
@@ -93,7 +93,7 @@ export function Preloader() {
       >
         <p
           data-intro-item
-          className="font-[family-name:var(--font-display)] text-4xl leading-none tracking-tight"
+          className="text-4xl leading-none font-semibold tracking-[-0.04em]"
         >
           Santam
         </p>

@@ -90,13 +90,14 @@ export function Testimonial() {
   );
 
   return (
+    /* Full-bleed color band, reference-style. Marigold's one big moment. */
     <section
       id="testimonial"
       ref={root}
-      className="section-y border-t border-hairline"
+      className="surface-marigold section-y"
       aria-label="Client testimonial"
     >
-      <figure className="shell flex flex-col items-center text-center">
+      <figure className="shell">
         <svg
           data-mark
           aria-hidden="true"
@@ -115,12 +116,15 @@ export function Testimonial() {
         </svg>
 
         <blockquote className="mt-10">
-          <p data-quote className="display-2 mx-auto max-w-[30ch] text-balance">
-            &ldquo;Thanks for the work. It&rsquo;s come out lovely.&rdquo;
+          <p data-quote className="display-2 max-w-[24ch]">
+            Thanks for the work. It&rsquo;s come out lovely.
           </p>
         </blockquote>
 
-        <figcaption data-attribution className="machine mt-10">
+        <figcaption
+          data-attribution
+          className="machine mt-10 border-t border-ink/35 pt-5"
+        >
           — {CLIENT_NAME}, Kalimpong Bungalow
         </figcaption>
       </figure>

@@ -63,26 +63,33 @@ console.log(`\nBudgets & accessibility — ${origin}\n`);
 /* -------------------------------------------------------- first-load JS -- */
 {
   const browser = await chromium.launch();
-  const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
-  let bytes = 0;
-  page.on("response", async (response) => {
-    const type = response.headers()["content-type"] ?? "";
-    if (!type.includes("javascript")) return;
-    const encoded = Number(response.headers()["content-length"] ?? 0);
-    if (encoded) bytes += encoded;
-    else {
-      try {
-        bytes += (await response.body()).length;
-      } catch {
-        /* ignore */
-      }
-    }
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  const page = await context.newPage();
+  const cdp = await context.newCDPSession(page);
+  await cdp.send("Network.enable");
+
+  // encodedDataLength is bytes on the wire (post-compression) — the number the
+  // budget is actually about. Decoded body sizes overstate by ~3×.
+  const types = new Map();
+  const sizes = new Map();
+  cdp.on("Network.responseReceived", (event) => {
+    types.set(event.requestId, event.response.mimeType ?? "");
   });
-  await page.goto(`${origin}/`, { waitUntil: "networkidle" });
-  await page.waitForTimeout(2000);
+  cdp.on("Network.loadingFinished", (event) => {
+    sizes.set(event.requestId, event.encodedDataLength);
+  });
+
+  // Snapshot at the load event: that is "first-load". Post-idle lazy chunks
+  // (deferred motion setup, route prefetches) are not first-load bytes.
+  await page.goto(`${origin}/`, { waitUntil: "load" });
+
+  let bytes = 0;
+  for (const [id, size] of sizes) {
+    if ((types.get(id) ?? "").includes("javascript")) bytes += size;
+  }
   const kb = Math.round(bytes / 1024);
-  if (kb < 200) pass(`first-load JS ${kb}KB (budget 200KB)`);
-  else fail(`first-load JS ${kb}KB exceeds the 200KB budget`);
+  if (kb < 200) pass(`first-load JS ${kb}KB transfer (budget 200KB)`);
+  else fail(`first-load JS ${kb}KB transfer exceeds the 200KB budget`);
   await browser.close();
 }
 

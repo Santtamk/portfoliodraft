@@ -7,8 +7,8 @@ export const contentType = OG_CONTENT_TYPE;
 
 export default async function Image() {
   return ogImage({
-    eyebrow: "// writing · 5 min",
+    eyebrow: "Writing · 5 min",
     headline: "What does AI say about your business?",
-    machine: '{ "answer_source": "what_it_can_read_about_you" }',
+    machine: "AI can only say what it can read.",
   });
 }

@@ -97,12 +97,26 @@ export function Work() {
             };
           });
 
+          // Scrolling moves the rows out from under a stationary cursor
+          // without firing pointerleave, which would strand the preview.
+          function onScroll() {
+            if (active === -1) return;
+            hide();
+            gsap.to(q("[data-row-title]"), {
+              x: 0,
+              duration: 0.5,
+              ease: "power3.out",
+            });
+          }
+
           window.addEventListener("pointermove", onMove, { passive: true });
+          window.addEventListener("scroll", onScroll, { passive: true });
           gsap.ticker.add(onTick);
 
           return () => {
             cleanups.forEach((fn) => fn());
             window.removeEventListener("pointermove", onMove);
+            window.removeEventListener("scroll", onScroll);
             gsap.ticker.remove(onTick);
           };
         });
@@ -154,11 +168,11 @@ export function Work() {
     <section
       id="work"
       ref={root}
-      className="section-y border-t border-hairline"
+      className="section-y border-t border-ink/60"
       aria-labelledby="work-title"
     >
       <div className="shell">
-        <Eyebrow>{"// selected-work"}</Eyebrow>
+        <Eyebrow>Selected work</Eyebrow>
         <h2 id="work-title" className="display-2 mt-6 max-w-[16ch]">
           No jargon. Just look at them.
         </h2>
@@ -168,12 +182,12 @@ export function Work() {
             <li
               key={project.slug}
               data-row-shell
-              className="border-t border-hairline last:border-b"
+              className="border-t border-ink/60 last:border-b last:border-ink/60"
             >
               {/* Inline image — the touch/narrow treatment. */}
               <div className="pt-8 lg:hidden">
                 {project.card ? (
-                  <div className="relative aspect-[16/8.6] w-full overflow-hidden rounded-[2px] bg-[color-mix(in_srgb,var(--color-pine)_6%,var(--surface))]">
+                  <div className="relative aspect-[16/8.6] w-full overflow-hidden bg-[color-mix(in_srgb,var(--color-pine)_6%,var(--surface))]">
                     <div data-inline-image className="absolute inset-0">
                       <div className="absolute inset-x-0 top-1/2 -translate-y-1/2">
                         <Image
@@ -189,7 +203,7 @@ export function Work() {
                   </div>
                 ) : (
                   <PlaceholderFrame
-                    label={`${project.name} — case study`}
+                    label={`${project.name} · case study`}
                     className="w-full"
                   />
                 )}
@@ -207,7 +221,7 @@ export function Work() {
                   >
                     <h3
                       data-row-title
-                      className="display-2 inline-block transition-colors group-hover:text-pine"
+                      className="display-2 inline-block transition-colors group-hover:text-marigold"
                     >
                       {project.name}
                     </h3>
@@ -257,11 +271,11 @@ export function Work() {
                 width={project.card.width}
                 height={project.card.height}
                 sizes={PREVIEW_SIZES}
-                className="h-auto w-full rounded-[2px] shadow-2xl"
+                className="h-auto w-full shadow-2xl"
               />
             ) : (
               <PlaceholderFrame
-                label={`${project.name} — case study`}
+                label={`${project.name} · case study`}
                 className="w-full shadow-2xl"
               />
             )}

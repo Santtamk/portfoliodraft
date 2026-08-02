@@ -14,7 +14,7 @@ function withEmphasis(text: string, emphasis?: string): ReactNode {
   return (
     <Fragment>
       {text.slice(0, at)}
-      <em className="font-[family-name:var(--font-display)]">{emphasis}</em>
+      <em>{emphasis}</em>
       {text.slice(at + emphasis.length)}
     </Fragment>
   );
@@ -32,7 +32,9 @@ export function HowIThink() {
         /* "Reading light" — each line lifts as it crosses the upper viewport. */
         media.add(FULL_MOTION, () => {
           const lines = q("[data-statement]") as HTMLElement[];
-          gsap.set(lines, { opacity: 0.15, y: 20 });
+          // 0.45 floor: mist blended over pine at 0.45 keeps ~3.5:1 contrast
+          // (large-text AA) for statements waiting below the reading light.
+          gsap.set(lines, { opacity: 0.45, y: 20 });
 
           const tweens = lines.map((line) =>
             gsap.to(line, {
@@ -106,7 +108,7 @@ export function HowIThink() {
       aria-labelledby="how-i-think-title"
     >
       <div className="shell">
-        <Eyebrow>{"// how-i-think"}</Eyebrow>
+        <Eyebrow>How I think</Eyebrow>
         <h2 id="how-i-think-title" className="display-2 mt-6 max-w-[16ch]">
           I stay current so you don&rsquo;t have to.
         </h2>
@@ -116,7 +118,7 @@ export function HowIThink() {
             <li
               key={statement.machine}
               data-statement
-              className="max-w-[30ch] font-[family-name:var(--font-display)] text-[clamp(1.4rem,3vw,2.4rem)] leading-[1.15] tracking-tight md:max-w-[34ch]"
+              className="max-w-[30ch] text-[clamp(1.35rem,2.9vw,2.3rem)] leading-[1.12] font-semibold tracking-[-0.03em] md:max-w-[34ch]"
             >
               {statement.href ? (
                 <Link

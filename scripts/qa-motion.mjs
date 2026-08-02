@@ -28,7 +28,7 @@ const early = await page.locator("[data-hero='machine']").textContent();
 await page.waitForTimeout(5000);
 const late = await page.locator("[data-hero='machine']").textContent();
 const FULL =
-  '{ "name": "Santam Kumai", "does": "makes technology make sense", "readable_by": ["humans", "machines"] }';
+  "Currently building booking sites and dashboards, and answering odd questions on WhatsApp.";
 
 if (late === FULL) pass("machine line completes");
 else fail(`machine line ended as: ${late}`);

@@ -1,4 +1,4 @@
-import { ARTICLE, type Project } from "@/lib/content";
+import type { Article, Project } from "@/lib/content";
 import { EMAIL, GITHUB, LINKEDIN, PERSON, SITE_URL } from "@/lib/site";
 
 const sameAs = [GITHUB, LINKEDIN].filter(Boolean);
@@ -59,17 +59,19 @@ export function projectSchema(project: Project) {
   };
 }
 
-/** Section 8.2 — the article. */
-export const articleSchema = {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  headline: ARTICLE.title,
-  description: ARTICLE.description,
-  author: { "@id": `${SITE_URL}/#person` },
-  publisher: { "@id": `${SITE_URL}/#person` },
-  datePublished: ARTICLE.date,
-  dateModified: ARTICLE.date,
-  mainEntityOfPage: `${SITE_URL}/writing/${ARTICLE.slug}`,
-  url: `${SITE_URL}/writing/${ARTICLE.slug}`,
-  inLanguage: "en",
-} as const;
+/** Section 8.2 — article pages. */
+export function articleSchema(article: Article) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.description,
+    author: { "@id": `${SITE_URL}/#person` },
+    publisher: { "@id": `${SITE_URL}/#person` },
+    datePublished: article.date,
+    dateModified: article.date,
+    mainEntityOfPage: `${SITE_URL}/writing/${article.slug}`,
+    url: `${SITE_URL}/writing/${article.slug}`,
+    inLanguage: "en",
+  };
+}

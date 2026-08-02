@@ -29,36 +29,57 @@ export function MachineNote({
   );
 }
 
-const buttonBase =
-  "inline-flex items-center justify-center gap-2 rounded-[2px] font-medium transition-colors duration-200";
+type BarVariant = "ink" | "marigold" | "ghost";
 
-const sizes = {
-  md: "px-6 py-3.5 text-[0.9375rem]",
-  lg: "px-8 py-5 text-lg md:px-12 md:py-6 md:text-xl",
-} as const;
-
-type ButtonLinkProps = ComponentProps<typeof Link> & {
-  variant?: "primary" | "ghost";
-  size?: keyof typeof sizes;
+const barVariants: Record<BarVariant, string> = {
+  ink: "bar-button",
+  marigold: "bar-button bar-button-marigold",
+  ghost: "bar-button bar-button-ghost",
 };
 
-export function ButtonLink({
-  variant = "primary",
-  size = "md",
+type BarLinkProps = ComponentProps<typeof Link> & {
+  variant?: BarVariant;
+  /** Arrow glyph on the right edge. */
+  arrow?: string;
+};
+
+/**
+ * The layout's primary action: a full-width hard-edged bar, label on the left,
+ * arrow on the right that nudges over on hover.
+ */
+export function BarLink({
+  variant = "ink",
+  arrow = "→",
   className = "",
   children,
   ...props
-}: ButtonLinkProps) {
+}: BarLinkProps) {
+  return (
+    <Link className={`${barVariants[variant]} ${className}`} {...props}>
+      <span>{children}</span>
+      <span aria-hidden="true" className="bar-arrow">
+        {arrow}
+      </span>
+    </Link>
+  );
+}
+
+/** Compact inline button, used only where a full bar would be too heavy. */
+export function ButtonLink({
+  variant = "primary",
+  className = "",
+  children,
+  ...props
+}: ComponentProps<typeof Link> & { variant?: "primary" | "ghost" }) {
   const variants = {
-    primary:
-      "bg-marigold text-ink hover:bg-[#d1912c] focus-visible:outline-offset-4",
+    primary: "metal-silver",
     ghost:
-      "border border-[var(--surface-line)] text-[var(--surface-text)] hover:border-[var(--surface-text)]",
+      "shadow-[inset_0_0_0_1px_var(--surface-line)] text-[var(--surface-text)] hover:shadow-[inset_0_0_0_1px_var(--surface-text)]",
   };
 
   return (
     <Link
-      className={`${buttonBase} ${sizes[size]} ${variants[variant]} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 px-6 py-3.5 text-[0.9375rem] font-medium transition-[background-color,box-shadow] duration-200 ${variants[variant]} ${className}`}
       {...props}
     >
       {children}
@@ -67,8 +88,9 @@ export function ButtonLink({
 }
 
 /**
- * Styled frame used wherever a real screenshot doesn't exist (RouteKind, or a
- * capture that failed). Never renders a broken image.
+ * Styled frame used wherever a real screenshot doesn't exist (a capture that
+ * failed, or a project added before its screens are taken). Never renders a
+ * broken image.
  */
 export function PlaceholderFrame({
   label,
@@ -81,7 +103,7 @@ export function PlaceholderFrame({
 }) {
   return (
     <div
-      className={`${ratio} ${className} relative grid place-items-center overflow-hidden rounded-[2px] border border-hairline bg-[color-mix(in_srgb,var(--color-pine)_9%,var(--surface))]`}
+      className={`${ratio} ${className} relative grid place-items-center overflow-hidden border border-hairline bg-[color-mix(in_srgb,var(--color-pine)_9%,var(--surface))]`}
     >
       <div
         aria-hidden="true"

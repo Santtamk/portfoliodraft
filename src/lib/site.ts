@@ -12,10 +12,10 @@ export const DEFAULT_WHATSAPP = "919800000000";
 export const DEFAULT_DOMAIN = "santam.dev";
 
 /** Full WhatsApp number, country code first, digits only. */
-export const WHATSAPP = DEFAULT_WHATSAPP;
+export const WHATSAPP = "918967390163";
 
 /** Public contact email, rendered as a real visible mailto: link. */
-export const EMAIL = "team@1947.io";
+export const EMAIL = "santtamk@gmail.com";
 
 /** Production domain, no protocol, no trailing slash. */
 export const DOMAIN = DEFAULT_DOMAIN;
@@ -38,7 +38,7 @@ export const CLIENT_NAME = "Client";
  * Portrait of Santam for the About page. Empty string means the portrait block
  * is skipped entirely (Section 4.9).
  */
-export const PHOTO = "";
+export const PHOTO = "/santam-portrait.jpg";
 
 export const WHATSAPP_HREF = `https://wa.me/${WHATSAPP}?text=Hi%20Santam`;
 /** Bare link, used in prose and llms.txt where no prefilled text is wanted. */
@@ -47,8 +47,8 @@ export const EMAIL_HREF = `mailto:${EMAIL}`;
 
 export const PERSON = {
   name: "Santam Kumai",
-  jobTitle: "Product & Design Engineer",
+  jobTitle: "Developer & Technology Advisor",
   location: "Kalimpong, India",
   description:
-    "Product and design engineer in Kalimpong, India. Builds custom websites, web apps, and digital tools, and helps businesses and non-technical people solve technology problems in plain language.",
+    "Developer and technology advisor in Kalimpong, India. Builds custom websites, web apps, and digital tools, and helps businesses and non-technical people solve technology problems in plain language.",
 } as const;

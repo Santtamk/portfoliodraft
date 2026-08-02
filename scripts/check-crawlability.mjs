@@ -48,9 +48,9 @@ async function get(path) {
 /** Copy that must be present verbatim in the server-rendered HTML. */
 const ROUTES = {
   "/": [
-    "Kalimpong, India · Product & Design Engineer",
+    "Kalimpong, India · Developer & Technology Advisor",
     "I make technology make sense.",
-    '"readable_by": ["humans", "machines"]',
+    "answering odd questions on WhatsApp",
     "Websites, digital tools, and honest answers",
     "Most people come for a website. They stay for everything else.",
     "Websites & web apps",
@@ -59,7 +59,9 @@ const ROUTES = {
     "No jargon. Just look at them.",
     "Kalimpong Bungalow",
     "Satori Stay",
-    "RouteKind",
+    "Teesta",
+    "Khata",
+    "Rasid",
     "I stay current so you don't have to.",
     "in words your grandmother would follow",
     "I read documentation the way other people read the news.",
@@ -104,11 +106,23 @@ const ROUTES = {
     "Mountain retreat visitors decide in seconds",
     "Next.js · TypeScript · Tailwind",
   ],
-  "/works/route-kind": [
-    "RouteKind",
+  "/works/teesta": [
+    "Teesta",
+    "Commerce & Retail",
+    "The shelf can never oversell",
+    "Next.js · TypeScript · SQLite · Tailwind",
+  ],
+  "/works/khata": [
+    "Khata",
     "Operational Tools",
-    "Dispatchers work under time pressure",
-    "Next.js · Node · PostgreSQL · GSAP",
+    "a double booking can't be written",
+    "Next.js · TypeScript · SQLite · Tailwind",
+  ],
+  "/works/rasid": [
+    "Rasid",
+    "Money & Paperwork",
+    "the amount in words",
+    "Next.js · TypeScript · SQLite · Tailwind",
   ],
 };
 
@@ -216,7 +230,9 @@ console.log("\nmachine-readable files");
     "/writing/when-ai-talks-about-your-business",
     "/works/kalimpong-bungalow",
     "/works/satori-stay",
-    "/works/route-kind",
+    "/works/teesta",
+    "/works/khata",
+    "/works/rasid",
   ];
   const gaps = expected.filter((path) => !urls.some((url) => url.endsWith(path)));
   if (sitemap.status === 200 && gaps.length === 0 && urls.length >= 7)

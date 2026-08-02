@@ -76,40 +76,43 @@ export function WhatIDo() {
     <section
       id="what-i-do"
       ref={root}
-      className="section-y border-t border-hairline"
+      className="section-y border-t border-ink/60"
       aria-labelledby="what-i-do-title"
     >
       <div className="shell">
-        <Eyebrow>{"// what-i-do"}</Eyebrow>
+        <Eyebrow>What I do</Eyebrow>
 
         <h2
           id="what-i-do-title"
-          className="display-2 mt-6 max-w-[20ch] text-balance"
+          className="display-2 mt-6 max-w-[22ch] text-balance"
         >
           Most people come for a website. They stay for everything else.
         </h2>
-
-        <ul className="mt-16 grid gap-12 md:mt-24 md:grid-cols-3 md:gap-8">
-          {WHAT_I_DO.map((block) => (
-            <li key={block.index}>
-              <span
-                data-rule
-                aria-hidden="true"
-                className="block h-px w-full bg-[var(--surface-line)]"
-              />
-              <div data-block-body className="pt-6">
-                <p className="machine" aria-hidden="true">
-                  {block.index}
-                </p>
-                <h3 className="mt-3 text-xl font-medium tracking-tight md:text-2xl">
-                  {block.title}
-                </h3>
-                <p className="mt-4 text-ink/80">{block.body}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
       </div>
+
+      {/* Chapter blocks — giant index + title left, description right. */}
+      <ul className="mt-16 md:mt-24">
+        {WHAT_I_DO.map((block) => (
+          <li key={block.index} className="relative">
+            <span
+              data-rule
+              aria-hidden="true"
+              className="absolute inset-x-0 top-0 block h-px bg-ink/60"
+            />
+            <div
+              data-block-body
+              className="shell grid gap-6 py-10 md:py-14 lg:grid-cols-2 lg:gap-16"
+            >
+              <h3 className="metallic display-chapter max-w-[14ch]">
+                {block.title}
+              </h3>
+              <p className="max-w-[52ch] self-end text-lg leading-relaxed text-ink/80 md:text-xl">
+                {block.body}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

@@ -1,6 +1,10 @@
 # Santam Kumai — Portfolio
 
-Built to `PORTFOLIO-MASTER-SPEC.md`. Next.js 16 (App Router) · TypeScript · Tailwind v4 · GSAP · Lenis. Every route is statically generated; there is no CMS, no backend, and no contact form.
+Built to `PORTFOLIO-MASTER-SPEC.md`, with the visual layer redirected to the editorial layout language of stateofaidesign.com (per request): one bold grotesque at every scale, mono machine labels, hard ink rules, chapter numbers, full-width bar buttons, flat color-blocked sections, and a viewport-filling footer wordmark. Next.js 16 (App Router) · TypeScript · Tailwind v4 · GSAP · Lenis. Every route is statically generated; there is no CMS, no backend, and no contact form.
+
+**Where the design deviates from the spec's Section 3** (all at the owner's request, all content/crawlability rules still enforced): Instrument Serif is gone — Switzer Semibold with tight negative tracking is the display voice; border radius is 0; the testimonial sits on a full-bleed gold band; the reading-light effect floors at 0.45 opacity (0.15 failed WCAG large-text contrast mid-scroll). The palette is now **graphite + Cloud Dancer**: a warm graphite ground (`#101011`), charcoal panels, soft platinum type, and Pantone 11-4201 Cloud Dancer — the 2026 Colour of the Year, a warm white (`#f0eee9`) — as the single accent: cloud-white metal bars and tiles, one bright Cloud Dancer band (the testimonial), and white highlights. The giant headlines and footer wordmark carry a warm silver-gradient sheen (`background-clip: text` / SVG gradient), and the action bars are brushed-metal gradients with a transform-only sheen sweep on hover. The machine-voice styling was also humanized: no `//` labels, no JSON lines, no snake_case — plain-language labels and asides throughout.
+
+**Token naming caveat:** the CSS variable names kept their layout roles when the site went dark, so their values inverted — `--color-mist` is now the dark ground and `--color-ink` is the platinum used for text and rules on it. `text-ink` = light text, `bg-mist` = dark background. The comment block in [globals.css](src/app/globals.css) is the source of truth.
 
 ```bash
 npm install
@@ -25,7 +29,7 @@ Everything the spec marks as a placeholder lives in one file: [src/lib/site.ts](
 
 | Constant | Current value | Note |
 |---|---|---|
-| `EMAIL` | `team@1947.io` | Rendered as a real, visible `mailto:` link in the Contact section and in `Person` schema. Change it if a different public address is wanted. |
+| `EMAIL` | `santtamk@gmail.com` | Rendered as a real, visible `mailto:` link in the Contact section and in `Person` schema. |
 | `GITHUB` | `https://github.com/santamkumai` | Verify the handle. Appears in the footer and in `sameAs`. |
 | `LINKEDIN` | *(empty)* | Optional. Empty means it's omitted everywhere — footer link and `sameAs` entry both disappear. Add the URL to switch it on. |
 | `CLIENT_NAME` | `Client` | Renders as "— Client, Kalimpong Bungalow". Replace with the client's name once they confirm permission to be named. |
@@ -90,6 +94,10 @@ src/
     gsap.ts                  plugin registry, media queries, deferMotion
 ```
 
+### The layout system
+
+Type: `display-1` (clamp to 7.5rem, -0.05em), `display-2`, `display-chapter` (the 01/02/03 blocks), `eyebrow`/`machine` mono labels. Devices: `bar-button` (+ `-marigold`, `-ghost` variants) for the full-width label-left/arrow-right action bars, `surface-pine`/`surface-ink`/`surface-marigold` for color-blocked sections, and the footer's `WordmarkLine` (SVG `textLength`, so "Santam / Kumai" spans exactly the shell width at every viewport with no overflow).
+
 ### The rules that shape the code
 
 **Content is never created by JavaScript.** Every word is in the server-rendered HTML. Animations only ever set hidden states *after* hydration (`gsap.set` inside `useGSAP`), so a crawler or a visitor with JS disabled gets the complete page. This is Section 7.1 of the spec and the reason the article in `/writing` can honestly claim the site is built the way it describes.
@@ -120,21 +128,11 @@ Screenshots and Lighthouse reports land in `.qa/` (git-ignored).
 
 ### Where things stand
 
-Measured locally against `npm start` (Lighthouse mobile, **devtools** throttling — see the note below):
+Accessibility, SEO, best-practices: **100 / 100 / 100 on every route** (Lighthouse), and **zero axe violations** on every route. CLS ≤ 0.004 everywhere. Crawlability (60 copy assertions, schema, llms/robots/sitemap), layout (360/768/1440, no-JS, reduced-motion, keyboard), and interaction suites: **all passing** after the redesign.
 
-| Route | Perf | A11y | SEO | Best pr. | LCP | CLS | TBT |
-|---|---|---|---|---|---|---|---|
-| `/` | 84 | 100 | 100 | 100 | 2183ms | 0.003 | 360ms |
-| `/writing/when-ai-…` | 91 | 100 | 100 | 100 | 1960ms | 0.001 | 220ms |
-| `/works/kalimpong-bungalow` | 90 | 100 | 100 | 100 | 2197ms | 0.001 | 221ms |
-| `/about` | 92 | 100 | 100 | 100 | 1863ms | 0.001 | 189ms |
-| `/writing` | 92 | 100 | 100 | 100 | 1862ms | 0.001 | 183ms |
+**Performance scores could not be measured reliably on this machine.** Identical builds measured article-route TBT anywhere from 230ms to 420ms depending on what else the computer was doing (IDE + browser background spikes dominate under Lighthouse's 4× CPU throttle). The best clean runs measured 94–95 perf on the article and 91+ on other routes; hot/loaded runs measured 76–88. Treat the deployed Vercel preview — the gate the spec actually names — as the source of truth, and run `npm run qa:budgets https://<preview-url>` there.
 
-First-load JS: **83KB** (budget 200KB). axe: **zero violations** on every route. Crawlability, layout, and motion suites: **all passing**.
-
-**The home page is 84 against a gate of 90 and is the one open item.** The cost is the shared shell — React hydration plus GSAP — not the sections: a home page rendering *only* the hero still measures 88/275ms, so removing content buys almost nothing. Cutting further would mean removing the hero's masked word reveal, which Section 4.2 specifies. Re-check on the deployed Vercel preview, which is the gate the spec actually names; a CDN with HTTP/2 and a machine that isn't also running the dev server should close a 5-point gap.
-
-**A note on Lighthouse throttling.** These runs use `throttlingMethod: "devtools"` (real applied throttling) rather than Lighthouse's default `simulate`. Lantern's simulation charges every request ~562ms of modelled latency, which is calibrated for real origins and badly wrong against `localhost` — it reported LCP of 3.0s on a page whose *observed* LCP breakdown was 142ms. On the deployed preview either method is meaningful; use the default there.
+**First-load JS is ~216KB gzipped on the wire** against the spec's "< ~200KB" soft budget (measured properly via CDP `encodedDataLength`; an earlier 83KB figure in this README's history under-counted chunked responses). The weight is React 19 + the Next 16 runtime (~130KB) plus GSAP + ScrollTrigger + Lenis (~45KB); there is no meaningful trim left that doesn't remove specified motion.
 
 ### Checklist status
 
@@ -147,6 +145,6 @@ First-load JS: **83KB** (budget 200KB). axe: **zero violations** on every route.
 | `prefers-reduced-motion` verified | pass — no cursor, no Lenis, no pinning, nothing left faded |
 | All Section 0 placeholders replaced | **two outstanding** — `WHATSAPP`, `DOMAIN` (see above) |
 | WhatsApp link opens from a phone; OG card renders in WhatsApp | **needs a real device** once `WHATSAPP` is set |
-| Lighthouse gates met on the deployed preview | **outstanding** — not deployed; local numbers above |
+| Lighthouse gates met on the deployed preview | **outstanding** — not deployed; local perf unmeasurable (see above), a11y/SEO/BP at 100 |
 | 360/768/1440, no horizontal scroll | pass |
 | Descriptive alt text; one `h1` per page | pass |

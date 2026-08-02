@@ -12,7 +12,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: `${PERSON.name} — Product & Design Engineer, Kalimpong`,
+  title: `${PERSON.name} — Developer & Technology Advisor, Kalimpong`,
   description:
     "I make technology make sense. Custom websites, digital tools, and plain-language technical help from Kalimpong, India.",
   authors: [{ name: PERSON.name, url: SITE_URL }],
@@ -31,8 +31,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#eff1ec",
-  colorScheme: "light",
+  themeColor: "#101011",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({

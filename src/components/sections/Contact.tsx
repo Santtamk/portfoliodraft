@@ -129,7 +129,7 @@ export function Contact() {
       aria-labelledby="contact-title"
     >
       <div className="shell">
-        <Eyebrow>{"// contact"}</Eyebrow>
+        <Eyebrow>Contact</Eyebrow>
 
         <h2
           id="contact-title"
@@ -139,27 +139,31 @@ export function Contact() {
           Have a project? Or a question you can&rsquo;t Google properly?
         </h2>
 
-        <p data-contact-body className="mt-8 max-w-[52ch] text-lg text-mist/80">
-          Message me on WhatsApp — it&rsquo;s the fastest way to reach me, and
+        <p data-contact-body className="mt-8 max-w-[52ch] text-lg text-ink/80">
+          Message me on WhatsApp. It&rsquo;s the fastest way to reach me, and
           yes, it&rsquo;s really me replying.
         </p>
 
         <div data-contact-body className="mt-14">
+          {/* The reference's full-width action bar, at billboard scale. */}
           <a
             data-magnetic
             href={WHATSAPP_HREF}
             target="_blank"
             rel="noopener"
-            className="inline-flex items-center gap-4 rounded-[2px] bg-marigold px-10 py-6 text-2xl font-medium text-ink transition-colors duration-200 hover:bg-[#d1912c] focus-visible:outline-offset-4 md:px-16 md:py-9 md:text-4xl"
+            className="bar-button bar-button-marigold !py-8 !text-2xl font-semibold tracking-[-0.02em] focus-visible:outline-offset-4 md:!py-12 md:!text-4xl"
           >
-            WhatsApp me <span aria-hidden="true">→</span>
+            <span>WhatsApp me</span>
+            <span aria-hidden="true" className="bar-arrow">
+              →
+            </span>
           </a>
         </div>
 
         <p data-contact-body className="machine mt-12">
           <a
             href={EMAIL_HREF}
-            className="underline decoration-[var(--surface-line)] underline-offset-4 transition-colors hover:text-mist"
+            className="underline decoration-[var(--surface-line)] underline-offset-4 transition-colors hover:text-ink"
           >
             {EMAIL}
           </a>
