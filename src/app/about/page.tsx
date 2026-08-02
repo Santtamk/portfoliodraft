@@ -29,8 +29,8 @@ export default function AboutPage() {
             Understanding first, code second.
           </h1>
           <p className="measure mt-10 text-lg leading-relaxed text-ink/80">
-            I&rsquo;m Santam, a developer and technology advisor in Kalimpong,
-            India. I don&rsquo;t just write code or drop templates. I study how
+            I&rsquo;m Santam, a developer and technology advisor from
+            Kalimpong, India. I don&rsquo;t just write code or drop templates. I study how
             a business operates, how its customers think, and build custom,
             high-performance web systems around real workflow friction. Websites
             are what people usually hire me for. Staying genuinely current with
