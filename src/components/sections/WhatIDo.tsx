@@ -86,7 +86,7 @@ export function WhatIDo() {
           id="what-i-do-title"
           className="display-2 mt-6 max-w-[22ch] text-balance"
         >
-          Most people come for a website. They stay for everything else.
+          Four connected ways I help move ideas toward practical solutions.
         </h2>
       </div>
 

@@ -18,6 +18,11 @@ export type Project = {
   /** Live URL, when the project is publicly visitable. */
   live?: string;
   thinking: string;
+  context?: string;
+  problem?: string;
+  role?: string;
+  approach?: string;
+  outcome?: string;
   tech: string[];
   /** Card / hover-preview image. Undefined → styled placeholder frame. */
   card?: Shot;
@@ -34,7 +39,17 @@ export const PROJECTS: Project[] = [
       "A cultural bed & breakfast site, shaped around the quiet luxury of heritage travel.",
     live: "https://kalimpongbungalow.com",
     thinking:
-      "A heritage bed & breakfast doesn't need to shout. The site moves slowly on purpose: large photography, calm type, and a booking path that never makes the guest hunt. Every choice serves the feeling of arriving somewhere quiet.",
+      "A heritage bed & breakfast doesn't need to shout. The site moves calmly by design: large photography, uncluttered typography, and a direct booking path. Every choice serves the feeling of arriving somewhere quiet.",
+    context:
+      "Kalimpong Bungalow is a heritage bed & breakfast in the Himalayan foothills.",
+    problem:
+      "Standard hotel templates feel transactional and cluttered. Guests needed a calm digital experience that reflected the property's history while providing a straightforward path to inquire and book.",
+    role:
+      "Requirements gathering, user experience design, content hierarchy, and frontend development.",
+    approach:
+      "Started by understanding guest priorities when researching heritage stays. Structured content around room details and house history with clear, persistent contact triggers.",
+    outcome:
+      "Delivered a fast, responsive digital presence that represents the property authentically and connects prospective guests directly to booking.",
     tech: ["Next.js", "TypeScript", "Tailwind", "GSAP"],
     card: {
       src: "/work/kalimpong-bungalow-desktop-1.webp",
@@ -77,7 +92,17 @@ export const PROJECTS: Project[] = [
       "A curated mountain retreat site built for instant atmosphere and quick booking.",
     live: "https://avinaybnb.vercel.app",
     thinking:
-      "Mountain retreat visitors decide in seconds: does this place feel right, and can I book it fast? The design answers both immediately, with photography-led atmosphere up top and clear calls to action always within reach.",
+      "Mountain retreat visitors decide quickly based on atmosphere and clarity. The design highlights property visuals immediately with straightforward rate and booking access.",
+    context:
+      "Satori Stay is a boutique mountain retreat providing short-stay accommodation.",
+    problem:
+      "Visitors need immediate visual context and quick access to rates without navigating complex menu trees.",
+    role:
+      "Client consultation, layout structuring, mobile optimization, and web development.",
+    approach:
+      "Focused on immediate visual storytelling combined with accessible call-to-action buttons across all screen sizes.",
+    outcome:
+      "Created a clear, responsive website that lets guests explore room details and initiate bookings without friction.",
     tech: ["Next.js", "TypeScript", "Tailwind"],
     card: {
       src: "/work/satori-stay-desktop-1.webp",
@@ -117,9 +142,19 @@ export const PROJECTS: Project[] = [
     name: "Teesta",
     category: "Commerce & Retail",
     oneLiner:
-      "A working store for an independent clothing label: catalog, cart, checkout, and a back office for inventory.",
+      "A working store for an independent clothing label: catalog, cart, checkout, and an inventory back office.",
     thinking:
-      "A shop has two customers: the person buying and the person restocking at eleven at night. Teesta gives both the same care. A quiet, lookbook-style storefront in front, and a back office where stock, orders, and product changes are two clicks. The shelf can never oversell: every order checks and reserves inventory in one atomic step.",
+      "An e-commerce tool serves two users: the shopper browsing products and the owner managing inventory. Teesta balances a quiet lookbook storefront with a functional back office where stock is reserved during checkout.",
+    context:
+      "Teesta is an independent apparel label selling limited production runs.",
+    problem:
+      "Small clothing brands face stock tracking issues when items sell concurrently, leading to accidental overselling.",
+    role:
+      "Requirement analysis, inventory workflow design, database modeling, and full storefront & back-office build.",
+    approach:
+      "Designed an inventory reservation mechanism during order placement paired with an uncluttered lookbook storefront.",
+    outcome:
+      "Built a complete storefront and stock management interface that keeps inventory numbers synchronized.",
     tech: ["Next.js", "TypeScript", "SQLite", "Tailwind"],
     card: {
       src: "/work/teesta-desktop-1.webp",
@@ -155,55 +190,23 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
-    slug: "khata",
-    name: "Khata",
-    category: "Operational Tools",
-    oneLiner:
-      "A front-desk system for small guesthouses: every room, every night, and the whole month on one screen.",
-    thinking:
-      "Most small guesthouses run on a paper ledger and a good memory, and both fail on a busy weekend. Khata is that ledger, made honest: arrivals and departures for today, a month board where every room-night is visible at a glance, and a booking form that checks the calendar before it saves, so a double booking can't be written, only politely refused.",
-    tech: ["Next.js", "TypeScript", "SQLite", "Tailwind"],
-    card: {
-      src: "/work/khata-desktop-2.webp",
-      alt: "Khata calendar board showing a month of bookings across eight guesthouse rooms",
-      width: 1440,
-      height: 900,
-    },
-    shots: [
-      {
-        src: "/work/khata-desktop-2.webp",
-        alt: "Khata calendar board showing a month of bookings across eight guesthouse rooms",
-        width: 1440,
-        height: 900,
-      },
-      {
-        src: "/work/khata-desktop-1.webp",
-        alt: "Khata dashboard with today's arrivals, departures, in-house guests, and occupancy",
-        width: 1440,
-        height: 900,
-      },
-      {
-        src: "/work/khata-mobile.webp",
-        alt: "Khata dashboard on a phone, showing today's stats and check-in buttons",
-        width: 780,
-        height: 1688,
-      },
-      {
-        src: "/work/khata-desktop-3.webp",
-        alt: "Khata bookings table with stay dates, totals, sources, and status workflow actions",
-        width: 1440,
-        height: 900,
-      },
-    ],
-  },
-  {
     slug: "rasid",
     name: "Rasid",
     category: "Money & Paperwork",
     oneLiner:
-      "An invoice studio where the document is the interface: typeset like print, with the boring machinery done right underneath.",
+      "An invoice studio where the document is the interface: typeset like print, with automatic math underneath.",
     thinking:
-      "Everyone judges an invoice in two seconds, and everyone underestimates the software behind a good one. Rasid puts the document at the centre, a properly typeset A4 sheet you edit live in three typographic voices, while the engine quietly handles what generic tools fumble: numbering that never skips, GST that splits itself, the amount in words, share links for clients, and a desk that knows who still owes you.",
+      "Invoices require both visual polish and accurate calculations. Rasid pairs a live-editing A4 preview with automated handling for numbering, tax calculations, and status tracking.",
+    context:
+      "Freelancers and small businesses need professional invoicing without complex enterprise software.",
+    problem:
+      "Manual word processor templates introduce formatting glitches and calculation mistakes, while heavy SaaS tools are slow and expensive.",
+    role:
+      "Product research, UI layout design, calculation logic implementation, and frontend application build.",
+    approach:
+      "Created a split-screen workspace with a live print-ready A4 preview backed by automatic calculation engine.",
+    outcome:
+      "Delivered a practical invoice studio that generates clear documents and tracks client payment status.",
     tech: ["Next.js", "TypeScript", "SQLite", "Tailwind"],
     card: {
       src: "/work/rasid-desktop-1.webp",
@@ -248,18 +251,23 @@ export function getProject(slug: string) {
 export const WHAT_I_DO = [
   {
     index: "01",
-    title: "Websites & web apps",
-    body: "Fast, custom-built, designed around how your visitors actually think, not around a template. From a heritage B&B to an operations dashboard.",
+    title: "Websites & Digital Products",
+    body: "From public-facing websites to dashboards and internal tools, I work through the problem, user journey, and implementation—not just the visual layer.",
   },
   {
     index: "02",
-    title: "Digital problem-solving",
-    body: "“Can this be automated?” “Why is this so slow?” “How do I connect X to Y?” These are the questions with no obvious person to ask. I'm that person. I figure things out, and I explain the answer in your language.",
+    title: "Research & Solution Design",
+    body: "Not every problem starts with a clear brief. I research unfamiliar subjects, compare possible approaches, and turn scattered information into something people can actually act on.",
   },
   {
     index: "03",
-    title: "A technical brain on your side",
-    body: "Choosing tools, understanding what's possible, avoiding expensive mistakes. If you've ever nodded along in a tech conversation while understanding nothing, talk to me instead.",
+    title: "Client Projects & Delivery",
+    body: "I work directly with clients to understand requirements, gather inputs, ask the right questions, and help move projects from vague ideas to clear deliverables.",
+  },
+  {
+    index: "04",
+    title: "Technology & AI Workflows",
+    body: "I use modern tools, including AI, to research faster, explore solutions, and reduce repetitive work. The tool matters less than whether the result is actually useful.",
   },
 ] as const;
 
@@ -276,26 +284,25 @@ export type Statement = {
 
 export const HOW_I_THINK: Statement[] = [
   {
-    text: "I can explain how a WhatsApp message reaches a business dashboard, why one site loads instantly and another crawls, and what today's smartest tools can genuinely do, in words your grandmother would follow.",
-    machine: "In practice: I explain the how and the why in plain words, every time.",
-    href: "/writing/when-ai-talks-about-your-business",
+    text: "I start with the problem, not the tool. A website, tool, or workflow is only useful if it solves the right problem.",
+    machine: "In practice: understanding first, build second.",
   },
   {
-    text: "When a new tool ships, I've usually tried it before it trends. Knowing what exists is half of solving any problem.",
-    machine: "In practice: by the time a tool is trending, I've already formed an opinion.",
+    text: "I'm comfortable in unfamiliar territory—researching unknown subjects, reading documentation, and working my way toward an answer.",
+    machine: "In practice: no predefined process needed.",
+  },
+  {
+    text: "If I don't understand something, I usually end up going down a rabbit hole until I do.",
+    machine: "In practice: curious by default.",
   },
   {
     text: "I read documentation the way other people read the news.",
     machine: "In practice: release notes are my morning newspaper.",
   },
   {
-    text: "Good technology is invisible. My job is choosing the right pieces and wiring them so you never have to think about them.",
-    machine: "In practice: if you never think about your website, I did my job.",
-  },
-  {
-    text: "I'll tell you when something doesn't need to be built. That advice is free, and it's saved my clients more than anything I've charged.",
+    text: "Sometimes the best solution is the simplest one that actually works. I'll tell you when something doesn't need to be built.",
     emphasis: "doesn't",
-    machine: "In practice: I'd rather save you a build than sell you one.",
+    machine: "In practice: practical over complicated every time.",
   },
 ];
 
@@ -339,4 +346,5 @@ export const ARTICLES: readonly Article[] = [ARTICLE_PHONE_LISTENING, ARTICLE];
 
 /** The line that types itself under the hero headline — a live status note. */
 export const MACHINE_VOICE_LINE =
-  "Currently building booking sites and dashboards, and answering odd questions on WhatsApp.";
+  "Currently researching problems, building digital tools, and turning ideas into practical solutions.";
+

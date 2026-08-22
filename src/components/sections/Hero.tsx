@@ -120,7 +120,7 @@ export function Hero() {
             data-hero="eyebrow"
             className="eyebrow border-t border-ink/60 pt-4"
           >
-            Kalimpong, India · Developer &amp; Technology Advisor
+            Kalimpong, India · Technology, Research &amp; Digital Delivery
           </p>
 
           {/* Fills the shell width, reference-style: one heavy grotesque. */}
@@ -129,7 +129,7 @@ export function Hero() {
             data-hero="h1"
             className="metallic mt-10 text-[clamp(2.9rem,10.4vw,9.75rem)] leading-[0.92] font-semibold tracking-[-0.055em] md:mt-14"
           >
-            I make technology make <em>sense</em>.
+            I turn messy problems into practical digital <em>solutions</em>.
           </h1>
 
           <p
@@ -147,8 +147,9 @@ export function Hero() {
               data-hero="sub"
               className="max-w-[52ch] text-lg leading-relaxed text-ink/80 md:text-xl"
             >
-              Websites, digital tools, and honest answers. For people who
-              don&rsquo;t speak tech, and for people who do.
+              I work across websites, digital tools, research, and client
+              projects—understanding the problem, figuring out the right
+              approach, and helping turn ideas into something useful.
             </p>
 
             <div data-hero="cta" className="flex flex-col gap-2">

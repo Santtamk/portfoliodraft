@@ -19,7 +19,6 @@ const ROUTES = [
   ["case-kalimpong", "/works/kalimpong-bungalow"],
   ["case-satori", "/works/satori-stay"],
   ["case-teesta", "/works/teesta"],
-  ["case-khata", "/works/khata"],
   ["case-rasid", "/works/rasid"],
 ];
 

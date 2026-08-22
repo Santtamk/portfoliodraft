@@ -48,32 +48,26 @@ async function get(path) {
 /** Copy that must be present verbatim in the server-rendered HTML. */
 const ROUTES = {
   "/": [
-    "Kalimpong, India · Developer & Technology Advisor",
-    "I make technology make sense.",
-    "answering odd questions on WhatsApp",
-    "Websites, digital tools, and honest answers",
-    "Most people come for a website. They stay for everything else.",
-    "Websites & web apps",
-    "Digital problem-solving",
-    "A technical brain on your side",
-    "No jargon. Just look at them.",
+    "Kalimpong, India · Technology, Research & Digital Delivery",
+    "I turn messy problems into practical digital solutions.",
+    "understanding the problem, figuring out the right approach",
+    "Four connected ways I help move ideas toward practical solutions.",
+    "Websites & Digital Products",
+    "Research & Solution Design",
+    "Client Projects & Delivery",
+    "Technology & AI Workflows",
     "Kalimpong Bungalow",
     "Satori Stay",
     "Teesta",
-    "Khata",
     "Rasid",
-    "I stay current so you don't have to.",
-    "in words your grandmother would follow",
+    "I start with the problem, not the tool.",
     "I read documentation the way other people read the news.",
-    "That advice is free",
-    "Thanks for the work. It's come out lovely.",
-    "Have a project? Or a question you can't Google properly?",
     "Message me on WhatsApp",
     "Built by hand. Understood before built. Readable by humans and machines.",
   ],
   "/about": [
-    "Understanding first, code second.",
-    "I study how a business operates, how its customers think",
+    "Understanding first, practical delivery second.",
+    "Chief of Staff at a small consulting and tech firm",
     "is why they keep my number",
   ],
   "/writing": [
@@ -110,12 +104,6 @@ const ROUTES = {
     "Teesta",
     "Commerce & Retail",
     "The shelf can never oversell",
-    "Next.js · TypeScript · SQLite · Tailwind",
-  ],
-  "/works/khata": [
-    "Khata",
-    "Operational Tools",
-    "a double booking can't be written",
     "Next.js · TypeScript · SQLite · Tailwind",
   ],
   "/works/rasid": [
@@ -231,11 +219,10 @@ console.log("\nmachine-readable files");
     "/works/kalimpong-bungalow",
     "/works/satori-stay",
     "/works/teesta",
-    "/works/khata",
     "/works/rasid",
   ];
   const gaps = expected.filter((path) => !urls.some((url) => url.endsWith(path)));
-  if (sitemap.status === 200 && gaps.length === 0 && urls.length >= 7)
+  if (sitemap.status === 200 && gaps.length === 0 && urls.length >= 6)
     pass(`/sitemap.xml (${urls.length} urls)`);
   else fail(`/sitemap.xml missing: ${gaps.join(", ") || urls.length + " urls"}`);
 }
@@ -244,8 +231,8 @@ console.log("\nmachine-readable files");
 console.log("\nspec 8.1 grep");
 {
   const { body } = await get("/");
-  if (text(body).includes("make technology make sense")) pass('grep "make technology make sense"');
-  else fail('grep "make technology make sense"');
+  if (text(body).includes("turn messy problems into practical digital solutions")) pass('grep "turn messy problems into practical digital solutions"');
+  else fail('grep "turn messy problems into practical digital solutions"');
 }
 
 console.log(

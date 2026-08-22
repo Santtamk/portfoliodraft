@@ -47,8 +47,8 @@ export const EMAIL_HREF = `mailto:${EMAIL}`;
 
 export const PERSON = {
   name: "Santam Kumai",
-  jobTitle: "Developer & Technology Advisor",
+  jobTitle: "Technology, Research & Digital Delivery",
   location: "Kalimpong, India",
   description:
-    "Developer and technology advisor in Kalimpong, India. Builds custom websites, web apps, and digital tools, and helps businesses and non-technical people solve technology problems in plain language.",
+    "Generalist working across technology, research, and digital delivery in Kalimpong, India. Helps turn messy problems and ideas into practical websites, tools, workflows, and digital solutions.",
 } as const;

@@ -109,9 +109,14 @@ export function HowIThink() {
     >
       <div className="shell">
         <Eyebrow>How I think</Eyebrow>
-        <h2 id="how-i-think-title" className="display-2 mt-6 max-w-[16ch]">
-          I stay current so you don&rsquo;t have to.
+        <h2 id="how-i-think-title" className="display-2 mt-6 max-w-[18ch]">
+          I start with the problem, not the tool.
         </h2>
+        <p className="measure mt-6 text-lg leading-relaxed text-ink/80 md:text-xl">
+          A website, dashboard, automation, or AI workflow is only useful if it
+          solves the right problem. I try to understand what is actually happening
+          before deciding what should be built.
+        </p>
 
         <ul className="mt-16 flex flex-col gap-12 md:mt-24 md:gap-16">
           {HOW_I_THINK.map((statement) => (

@@ -108,7 +108,50 @@ export default async function CasePage({ params }: Params) {
           >
             The thinking
           </h2>
-          <p className="measure mt-8 text-lg text-ink/80">{project.thinking}</p>
+          <p className="measure mt-8 text-lg leading-relaxed text-ink/80 md:text-xl">
+            {project.thinking}
+          </p>
+
+          {project.problem || project.role ? (
+            <div className="mt-16 grid gap-10 border-t border-ink/60 pt-12 md:grid-cols-2 md:gap-14">
+              {project.context || project.problem ? (
+                <div>
+                  <h3 className="machine text-marigold">Context &amp; Problem</h3>
+                  <p className="mt-3 text-base leading-relaxed text-ink/80 md:text-lg">
+                    {project.context ? `${project.context} ` : ""}
+                    {project.problem}
+                  </p>
+                </div>
+              ) : null}
+
+              {project.role ? (
+                <div>
+                  <h3 className="machine text-marigold">My Role</h3>
+                  <p className="mt-3 text-base leading-relaxed text-ink/80 md:text-lg">
+                    {project.role}
+                  </p>
+                </div>
+              ) : null}
+
+              {project.approach ? (
+                <div>
+                  <h3 className="machine text-marigold">The Approach</h3>
+                  <p className="mt-3 text-base leading-relaxed text-ink/80 md:text-lg">
+                    {project.approach}
+                  </p>
+                </div>
+              ) : null}
+
+              {project.outcome ? (
+                <div>
+                  <h3 className="machine text-marigold">Practical Outcome</h3>
+                  <p className="mt-3 text-base leading-relaxed text-ink/80 md:text-lg">
+                    {project.outcome}
+                  </p>
+                </div>
+              ) : null}
+            </div>
+          ) : null}
         </Reveal>
       </section>
 
