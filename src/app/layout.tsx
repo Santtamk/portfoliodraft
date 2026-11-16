@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Cursor } from "@/components/Cursor";
 import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
@@ -44,6 +45,18 @@ export default function RootLayout({
         <JsonLd data={[personSchema, websiteSchema]} />
       </head>
       <body>
+        <Script
+          src="https://www.googletagmanager.com/gtm.js?id=G-5M7N9J3Y58"
+          strategy="afterInteractive"
+        />
+        <Script id="google-tag" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-5M7N9J3Y58');
+          `}
+        </Script>
         <a className="skip-link" href="#main">
           Skip to content
         </a>
